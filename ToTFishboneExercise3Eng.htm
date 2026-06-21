@@ -1,0 +1,419 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Aptos;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Aptos",sans-serif;}
+.MsoChpDefault
+	{font-size:11.0pt;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:107%;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-GB style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal>&lt;!DOCTYPE html&gt;</p>
+
+<p class=MsoNormal>&lt;html lang=&quot;en&quot;&gt;</p>
+
+<p class=MsoNormal>&lt;head&gt;</p>
+
+<p class=MsoNormal>&lt;meta charset=&quot;UTF-8&quot;&gt;</p>
+
+<p class=MsoNormal>&lt;meta name=&quot;viewport&quot; content=&quot;;
+background:#f4f6f8; }&lt;meta name=&quot;viewport&quot;
+content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</p>
+
+<p class=MsoNormal>h1 { text-align:center; }</p>
+
+<p class=MsoNormal>button { margin:5px; padding:8px; border:none;
+border-radius:5px; background:#0078d4; color:white; }</p>
+
+<p class=MsoNormal>button.selected { background:#00b294; }</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>#subtopics div {</p>
+
+<p class=MsoNormal>&nbsp; padding:8px; margin:5px; background:#eee;</p>
+
+<p class=MsoNormal>&nbsp; border-radius:5px; cursor:pointer;</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>.correct { background:#c8f7c5 !important; }</p>
+
+<p class=MsoNormal>.incorrect { background:#f7c5c5 !important; }</p>
+
+<p class=MsoNormal>.dragging { opacity:0.5; }</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>.fishbone { position:relative; height:420px;
+background:white; margin-top:20px; border-radius:10px; }</p>
+
+<p class=MsoNormal>.spine { position:absolute; top:50%; width:100%; height:3px;
+background:black; }</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>.bone { position:absolute; width:120px; text-align:center; }</p>
+
+<p class=MsoNormal>.line { width:100px; height:2px; background:black;
+margin:auto; }</p>
+
+<p class=MsoNormal>.dropzone { border:2px dashed #ccc; min-height:40px;
+margin-top:5px; padding:5px; font-size:12px; }</p>
+
+<p class=MsoNormal>&lt;/style&gt;</p>
+
+<p class=MsoNormal>&lt;/head&gt;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&lt;body&gt;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&lt;h1&gt;Fishbone Diagram Activity&lt;/h1&gt;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&lt;h3&gt;Select up to 6 Bones&lt;/h3&gt;</p>
+
+<p class=MsoNormal>&lt;div id=&quot;bones&quot;&gt;&lt;/div&gt;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&lt;h3&gt;Sub-topics&lt;/h3&gt;</p>
+
+<p class=MsoNormal>&lt;div id=&quot;subtopics&quot;&gt;&lt;/div&gt;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&lt;div class=&quot;fishbone&quot;&gt;</p>
+
+<p class=MsoNormal>&nbsp; &lt;div class=&quot;spine&quot;&gt;&lt;/div&gt;</p>
+
+<p class=MsoNormal>&nbsp; &lt;div id=&quot;diagram&quot;&gt;&lt;/div&gt;</p>
+
+<p class=MsoNormal>&nbsp; &lt;div style=&quot;position:absolute; right:10px;
+top:45%; font-weight:bold;&quot;&gt;Problem&lt;/div&gt;</p>
+
+<p class=MsoNormal>&lt;/div&gt;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&lt;button onclick=&quot;checkAnswers()&quot;&gt;Check
+Answers&lt;/button&gt;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&lt;script&gt;</p>
+
+<p class=MsoNormal>const data = {</p>
+
+<p class=MsoNormal>&nbsp; &quot;Legal Frameworks&quot;: [&quot;Weak
+enforcement&quot;,&quot;Gaps in legislation&quot;,&quot;Inconsistent
+regulations&quot;],</p>
+
+<p class=MsoNormal>&nbsp; &quot;Institutional Capacity&quot;: [&quot;Limited
+expertise&quot;,&quot;Understaffed agencies&quot;,&quot;Weak
+coordination&quot;],</p>
+
+<p class=MsoNormal>&nbsp; &quot;Infrastructure&quot;: [&quot;Lack of treatment
+facilities&quot;,&quot;Poor landfill systems&quot;,&quot;Limited
+recycling&quot;],</p>
+
+<p class=MsoNormal>&nbsp; &quot;Transboundary Movement&quot;: [&quot;Illegal
+dumping&quot;,&quot;Mislabeling shipments&quot;,&quot;Weak border
+monitoring&quot;],</p>
+
+<p class=MsoNormal>&nbsp; &quot;Economic Factors&quot;: [&quot;High disposal
+cost&quot;,&quot;Limited funding&quot;,&quot;Informal sector reliance&quot;],</p>
+
+<p class=MsoNormal>&nbsp; &quot;Technology &amp; Data&quot;: [&quot;Poor data
+collection&quot;,&quot;Outdated equipment&quot;,&quot;Lack of tracking
+systems&quot;],</p>
+
+<p class=MsoNormal>&nbsp; &quot;Public Awareness&quot;: [&quot;Low
+awareness&quot;,&quot;Informal recycling&quot;,&quot;Limited education&quot;],</p>
+
+<p class=MsoNormal>&nbsp; &quot;Environment&quot;: [&quot;Hurricane
+disruptions&quot;,&quot;Limited land space&quot;,&quot;Coastal
+contamination&quot;]</p>
+
+<p class=MsoNormal>};</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>let selectedBones = [];</p>
+
+<p class=MsoNormal>let items = [];</p>
+
+<p class=MsoNormal>let placements = {};</p>
+
+<p class=MsoNormal>let dragged = null;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>function shuffle(arr){ return
+arr.sort(()=&gt;Math.random()-0.5); }</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>// create buttons</p>
+
+<p class=MsoNormal>Object.keys(data).forEach(bone=&gt;{</p>
+
+<p class=MsoNormal>&nbsp; const btn=document.createElement(&quot;button&quot;);</p>
+
+<p class=MsoNormal>&nbsp; btn.innerText=bone;</p>
+
+<p class=MsoNormal>&nbsp; btn.onclick=()=&gt;{</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; if(selectedBones.includes(bone)){</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+selectedBones=selectedBones.filter(b=&gt;b!==bone);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+btn.classList.remove(&quot;selected&quot;);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; } else {</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+if(selectedBones.length&gt;=6) return alert(&quot;Max 6 bones&quot;);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; selectedBones.push(bone);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+btn.classList.add(&quot;selected&quot;);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; }</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; load(); draw();</p>
+
+<p class=MsoNormal>&nbsp; };</p>
+
+<p class=MsoNormal>&nbsp; bones.appendChild(btn);</p>
+
+<p class=MsoNormal>});</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>function load(){</p>
+
+<p class=MsoNormal>&nbsp; subtopics.innerHTML=&quot;&quot;;</p>
+
+<p class=MsoNormal>&nbsp;
+items=shuffle(selectedBones.flatMap(b=&gt;data[b].map(s=&gt;({text:s,bone:b}))));</p>
+
+<p class=MsoNormal>&nbsp; placements={};</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp; items.forEach(item=&gt;{</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; const
+el=document.createElement(&quot;div&quot;);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; el.innerText=item.text;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; // desktop</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; el.draggable=true;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; el.ondragstart=()=&gt;{ dragged=item;
+el.classList.add(&quot;dragging&quot;); };</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;
+el.ondragend=()=&gt;el.classList.remove(&quot;dragging&quot;);</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; // mobile</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; el.ontouchstart=()=&gt;{ dragged=item;
+el.classList.add(&quot;dragging&quot;); };</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; subtopics.appendChild(el);</p>
+
+<p class=MsoNormal>&nbsp; });</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>function draw(){</p>
+
+<p class=MsoNormal>&nbsp; diagram.innerHTML=&quot;&quot;;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp; selectedBones.forEach((bone,i)=&gt;{</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; const
+div=document.createElement(&quot;div&quot;);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; div.className=&quot;bone&quot;;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; const top=i%2===0;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; div.style.left=(10+i*12)+&quot;%&quot;;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;
+div.style.top=top?&quot;20%&quot;:&quot;70%&quot;;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;
+div.style.transform=top?&quot;rotate(-40deg)&quot;:&quot;rotate(40deg)&quot;;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; div.ondragover=e=&gt;e.preventDefault();</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; div.ondrop=()=&gt;place(bone);</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; div.ontouchend=()=&gt;place(bone);</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; const
+line=document.createElement(&quot;div&quot;); line.className=&quot;line&quot;;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; const
+label=document.createElement(&quot;div&quot;); label.innerText=bone;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; const
+drop=document.createElement(&quot;div&quot;);
+drop.className=&quot;dropzone&quot;;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; Object.keys(placements).forEach(t=&gt;{</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(placements[t]===bone){</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const
+d=document.createElement(&quot;div&quot;);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d.innerText=t;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+drop.appendChild(d);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; });</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; div.appendChild(line);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; div.appendChild(label);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; div.appendChild(drop);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; diagram.appendChild(div);</p>
+
+<p class=MsoNormal>&nbsp; });</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>function place(bone){</p>
+
+<p class=MsoNormal>&nbsp; if(!dragged) return;</p>
+
+<p class=MsoNormal>&nbsp; placements[dragged.text]=bone;</p>
+
+<p class=MsoNormal>&nbsp; dragged=null;</p>
+
+<p class=MsoNormal>&nbsp; draw();</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>function checkAnswers(){</p>
+
+<p class=MsoNormal>&nbsp; document.querySelectorAll(&quot;#subtopics
+div&quot;).forEach(el=&gt;{</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; const item=items.find(i=&gt;i.text===el.innerText);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; if(placements[item.text]===item.bone){</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+el.classList.add(&quot;correct&quot;);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; } else {</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+el.classList.add(&quot;incorrect&quot;);</p>
+
+<p class=MsoNormal>&nbsp;&nbsp;&nbsp; }</p>
+
+<p class=MsoNormal>&nbsp; });</p>
+
+<p class=MsoNormal>}</p>
+
+<p class=MsoNormal>&lt;/script&gt;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&lt;/body&gt;</p>
+
+<p class=MsoNormal>&lt;/html&gt;</p>
+
+<p class=MsoNormal>&lt;title&gt;Fishbone Activity&lt;/title&gt;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&lt;style&gt;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
