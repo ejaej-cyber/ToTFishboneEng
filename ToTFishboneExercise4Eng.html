@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fishbone Activity</title>
+<style>
+body { background:#f4f6f8; }
+h1 { text-align:center; }
+button { margin:5px; padding:8px; border:none; border-radius:5px; background:#0078d4; color:white; }
+button.selected { background:#00b294; }
+
+#subtopics div {
+  padding:8px; margin:5px; background:#eee;
+  border-radius:5px; cursor:pointer;
+}
+
+.correct { background:#c8f7c5 !important; }
+.incorrect { background:#f7c5c5 !important; }
+.dragging { opacity:0.5; }
+
+.fishbone { position:relative; height:420px; background:white; margin-top:20px; border-radius:10px; }
+.spine { position:absolute; top:50%; width:100%; height:3px; background:black; }
+
+.bone { position:absolute; width:120px; text-align:center; }
+.line { width:100px; height:2px; background:black; margin:auto; }
+.dropzone { border:2px dashed #ccc; min-height:40px; margin-top:5px; padding:5px; font-size:12px; }
+</style>
+</head>
+
+<body>
+
+<h1>Fishbone Diagram Activity</h1>
+
+<h3>Select up to 6 Bones</h3>
+<div id="bones"></div>
+
+<h3>Sub-topics</h3>
+<div id="subtopics"></div>
+
+<div class="fishbone">
+  <div class="spine"></div>
+  <div id="diagram"></div>
+  <div style="position:absolute; right:10px; top:45%; font-weight:bold;">Problem</div>
+</div>
+
+<button onclick="checkAnswers()">Check Answers</button>
+
+<script>
+const data = {
+  "Legal Frameworks": ["Weak enforcement","Gaps in legislation","Inconsistent regulations"],
+  "Institutional Capacity": ["Limited expertise","Understaffed agencies","Weak coordination"],
+  "Infrastructure": ["Lack of treatment facilities","Poor landfill systems","Limited recycling"],
+  "Transboundary Movement": ["Illegal dumping","Mislabeling shipments","Weak border monitoring"],
+  "Economic Factors": ["High disposal cost","Limited funding","Informal sector reliance"],
+  "Technology & Data": ["Poor data collection","Outdated equipment","Lack of tracking systems"],
+  "Public Awareness": ["Low awareness","Informal recycling","Limited education"],
+  "Environment": ["Hurricane disruptions","Limited land space","Coastal contamination"]
+};
+
+let selectedBones = [];
+let items = [];
+let placements = {};
+let dragged = null;
+
+function shuffle(arr){ return arr.sort(()=>Math.random()-0.5); }
+
+// create buttons
+Object.keys(data).forEach(bone=>{
+  const btn=document.createElement("button");
+  btn.innerText=bone;
+  btn.onclick=()=>{
+    if(selectedBones.includes(bone)){
+      selectedBones=selectedBones.filter(b=>b!==bone);
+      btn.classList.remove("selected");
+    } else {
+      if(selectedBones.length>=6) return alert("Max 6 bones");
+      selectedBones.push(bone);
+      btn.classList.add("selected");
+    }
+    load(); draw();
+  };
+  bones.appendChild(btn);
+});
+
+function load(){
+  subtopics.innerHTML="";
+  items=shuffle(selectedBones.flatMap(b=>data[b].map(s=>({text:s,bone:b}))));
+  placements={};
+
+  items.forEach(item=>{
+    const el=document.createElement("div");
+    el.innerText=item.text;
+
+    // desktop
+    el.draggable=true;
+    el.ondragstart=()=>{ dragged=item; el.classList.add("dragging"); };
+    el.ondragend=()=>el.classList.remove("dragging");
+
+    // mobile
+    el.ontouchstart=()=>{ dragged=item; el.classList.add("dragging"); };
+
+    subtopics.appendChild(el);
+  });
+}
+
+function draw(){
+  diagram.innerHTML="";
+
+  selectedBones.forEach((bone,i)=>{
+    const div=document.createElement("div");
+    div.className="bone";
+
+    const top=i%2===0;
+    div.style.left=(10+i*12)+"%";
+    div.style.top=top?"20%":"70%";
+    div.style.transform=top?"rotate(-40deg)":"rotate(40deg)";
+
+    div.ondragover=e=>e.preventDefault();
+    div.ondrop=()=>place(bone);
+
+    div.ontouchend=()=>place(bone);
+
+    const line=document.createElement("div"); line.className="line";
+    const label=document.createElement("div"); label.innerText=bone;
+    const drop=document.createElement("div"); drop.className="dropzone";
+
+    Object.keys(placements).forEach(t=>{
+      if(placements[t]===bone){
+        const d=document.createElement("div");
+        d.innerText=t;
+        drop.appendChild(d);
+      }
+    });
+
+    div.appendChild(line);
+    div.appendChild(label);
+    div.appendChild(drop);
+    diagram.appendChild(div);
+  });
+}
+
+function place(bone){
+  if(!dragged) return;
+  placements[dragged.text]=bone;
+  dragged=null;
+  draw();
+}
+
+function checkAnswers(){
+  document.querySelectorAll("#subtopics div").forEach(el=>{
+    const item=items.find(i=>i.text===el.innerText);
+    if(placements[item.text]===item.bone){
+      el.classList.add("correct");
+    } else {
+      el.classList.add("incorrect");
+    }
+  });
+}
+</script>
+
+</body>
+</html>
